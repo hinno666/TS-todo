@@ -21,6 +21,21 @@ export const App: React.FC = () => {
     setValue('');
   }
 
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id != id))
+  }
+
+  const completeTodo = (id: ITodo['id']) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, complete: !todo.complete }
+        }
+        return todo;
+      })
+    )
+  }
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValue(value)
@@ -35,7 +50,7 @@ export const App: React.FC = () => {
       >
         <Header />
         <Panel addTodo={addTodo} onChange={onChange} value={value} />
-        <TodoList todoList={todos} />
+        <TodoList todoList={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
       </Box>
     </div>
   )

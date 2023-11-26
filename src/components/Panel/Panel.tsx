@@ -6,7 +6,6 @@ interface Props {
     addTodo: () => void;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 export const Panel: React.FC<Props> = ({ addTodo, value, onChange }) => {
 
     return (
@@ -28,6 +27,7 @@ export const Panel: React.FC<Props> = ({ addTodo, value, onChange }) => {
                 type="text"
                 value={value}
                 onChange={onChange}
+                inputRef={input => input && input.focus()}
                 sx={{
                     width: '300px'
                 }}
