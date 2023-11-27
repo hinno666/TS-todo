@@ -2,13 +2,16 @@ import { ITodo } from "../../types/data"
 import { IconButton, Checkbox, Paper, Box, Typography } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import { useAppDispatch } from "../../hook";
+import { completeTodo, removeTodo } from "../../store/todoSlice";
 
 interface ITodoItem extends ITodo {
-    deleteTodo: (id: ITodo['id']) => void;
-    completeTodo: (id: ITodo['id']) => void;
+
 }
 
-export const TodoItem: React.FC<ITodoItem> = ({ id, title, complete, deleteTodo, completeTodo }) => {
+export const TodoItem: React.FC<ITodoItem> = ({ id, title, complete }) => {
+
+    const dispatch = useAppDispatch()
 
     return (
         <Paper
@@ -41,7 +44,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ id, title, complete, deleteTodo,
                 </Typography>
             </Box>
             <Box>
-                <Checkbox checked={complete} onChange={() => completeTodo(id)} />
+                <Checkbox checked={complete} onChange={() => dispatch(completeTodo(id))} />
                 <IconButton
                     aria-label="delete"
                 >
@@ -50,7 +53,7 @@ export const TodoItem: React.FC<ITodoItem> = ({ id, title, complete, deleteTodo,
                 <IconButton
                     color="error"
                     aria-label="delete"
-                    onClick={() => deleteTodo(id)}
+                    onClick={() => dispatch(removeTodo(id))}
                 >
                     <DeleteIcon />
                 </IconButton>

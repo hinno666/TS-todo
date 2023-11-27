@@ -3,3 +3,8 @@ export interface ITodo {
     title: string;
     complete: boolean;
 }
+
+export type TodoState = {
+    todos: ITodo[]
+}
+

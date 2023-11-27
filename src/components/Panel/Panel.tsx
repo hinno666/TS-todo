@@ -1,12 +1,27 @@
 import { Add } from '@mui/icons-material'
 import { TextField, Paper, Button } from '@mui/material'
+import { useAppDispatch } from '../../hook';
+import { addTodo } from '../../store/todoSlice';
+import { useState } from 'react';
 
-interface Props {
-    value: string;
-    addTodo: () => void;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-export const Panel: React.FC<Props> = ({ addTodo, value, onChange }) => {
+
+export const Panel: React.FC = () => {
+    const [value, setValue] = useState('');
+    const dispatch = useAppDispatch()
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        setValue(value)
+        console.log(value);
+    }
+
+    const handleAction = () => {
+        if(value.trim().length) {
+            dispatch(addTodo(value));
+            setValue('')
+        }
+    }
+
 
     return (
         <Paper
@@ -27,12 +42,16 @@ export const Panel: React.FC<Props> = ({ addTodo, value, onChange }) => {
                 type="text"
                 value={value}
                 onChange={onChange}
-                inputRef={input => input && input.focus()}
+                autoFocus={true}
                 sx={{
                     width: '300px'
                 }}
             />
-            <Button variant="outlined" onClick={addTodo} startIcon={<Add />}>ADD</Button>
+            <Button
+                variant="outlined"
+                startIcon={<Add />}
+                onClick={handleAction}
+            >ADD</Button>
         </Paper>
     )
 }

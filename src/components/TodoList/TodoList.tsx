@@ -1,19 +1,16 @@
-import { ITodo } from "../../types/data"
+import { useAppSelector } from "../../hook"
 import { TodoItem } from "../TodoItem/TodoItem"
 import { Box } from '@mui/material'
 
-interface ITodoListProps {
-    todoList: ITodo[];
-    deleteTodo: (id: ITodo['id']) => void;
-    completeTodo: (id: ITodo['id']) => void;
-}
 
-export const TodoList: React.FC<ITodoListProps> = ({ todoList, deleteTodo, completeTodo }) => {
+export const TodoList = () => {
+    const todos = useAppSelector((state) => state.todos.todos);
+ 
     return (
         <Box>
-            {todoList.map((todo) => {
-                return <TodoItem key={todo.id} {...todo} deleteTodo={deleteTodo} completeTodo={completeTodo} />
-            })}
+            {todos.map(todo => (
+                <TodoItem key={todo.id} {...todo} />
+            ))}
         </Box>
     )
 }
