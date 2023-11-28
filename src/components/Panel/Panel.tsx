@@ -16,9 +16,15 @@ export const Panel: React.FC = () => {
     }
 
     const handleAction = () => {
-        if(value.trim().length) {
+        if (value.trim().length) {
             dispatch(addTodo(value));
             setValue('')
+        }
+    }
+
+    const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            dispatch(handleAction)
         }
     }
 
@@ -41,6 +47,7 @@ export const Panel: React.FC = () => {
                 variant="outlined"
                 type="text"
                 value={value}
+                onKeyDown={onKeyDown}
                 onChange={onChange}
                 autoFocus={true}
                 sx={{
